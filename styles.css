@@ -1,0 +1,99 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hero {
+    width:100%;
+    min-height: 850px;
+    flex-shrink: 0;
+    background: var(--Deep-Brown, #221009);
+    position: relative; /* Dodane, aby umożliwić pozycjonowanie dzieci */
+}
+
+.home_img {
+    width: 1332px;
+    height: 749px;
+    background: url(images/home.png) no-repeat;
+    position: absolute; /* Dodane, aby pozycjonować względem rodzica */
+    bottom: 0; /* Przesunięcie do dolnej krawędzi rodzica */
+    left: 0; /* Przesunięcie do lewej krawędzi rodzica */
+}
+
+.intro {
+display: inline-flex;
+height: 850px;
+
+justify-content: flex-end;
+align-items: center;
+flex-shrink: 0;
+background: var(--Dark-Beige, #F1C69F);
+}
+
+.intro-content {
+width: 785px;
+color: var(--Deep-Brown, #221009);
+/* Display 1 */
+font-family: Inter;
+font-size: 36px;
+font-style: normal;
+font-weight: 400;
+line-height: 52px; /* 144.444% */
+letter-spacing: -0.36px;
+padding: 61px 270px 61px 385px;
+}
+
+.oferta {
+display: inline-flex;
+width: 100%;
+height: 850px;
+padding-left: 0px;
+justify-content: flex-end;
+align-items: center;
+flex-shrink: 0;
+background: var(--Deep-Brown, #221009);
+}
+
+.hero-content {
+    z-index: 1;
+}
+
+.main-nav {
+    width: 100%;
+    height: 84px;
+    flex-shrink: 0;
+    background: var(--Deep-Brown, #221009);
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start; /* Ustawia elementy od lewej do prawej */
+}
+
+.main-nav li {
+    margin-left:8px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #FFFFFF;
+    padding-left: 32px;
+    padding-top: 30px;
+    display: inline-block;
+    background: var(--Deep-Brown, #221009);
+    border: var(--Deep-Brown, #221009);
+    transition: background-color 0.3s;
+    color: var(--White, #FFF);
+    /* Header link */
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 120% */
+}
+
