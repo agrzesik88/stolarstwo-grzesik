@@ -1,11 +1,15 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 .hero {
+    overflow: auto;
+    display: flex;
+    justify-content: space-between; /* Umieszcza elementy na przeciwnych krańcach kontenera */
+    align-items: center;
     width:100%;
     min-height: 850px;
     flex-shrink: 0;
@@ -13,7 +17,23 @@ body {
     position: relative; /* Dodane, aby umożliwić pozycjonowanie dzieci */
 }
 
+.logo_big {
+    width: 870px;
+    height: 130px;
+    display: inline-flex;
+    left: 25%;
+    flex-direction: column;
+    align-items: flex-start;
+    background: url(images/logo_big.png) no-repeat;
+    position: fixed;
+    top: 108px; /* Przykładowa wartość przesunięcia w górę */
+    z-index: 9998; /* Upewnij się, że logo jest na wierzchu */
+    transform: translateX(-50%);
+    transition: top 1.2s ease-in-out;
+}
+
 .home_img {
+    float: left;
     width: 1332px;
     height: 749px;
     background: url(images/home.png) no-repeat;
@@ -23,48 +43,79 @@ body {
 }
 
 .intro {
-display: inline-flex;
-height: 850px;
-
-justify-content: flex-end;
-align-items: center;
-flex-shrink: 0;
-background: var(--Dark-Beige, #F1C69F);
+    width: 100%;
+    height: 850px;
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie treści w poziomie */
+    align-items: center; /* Wyśrodkowanie treści w pionie */
+    padding: 0;
+    background: var(--Dark-Beige, #F1C69F);
 }
 
 .intro-content {
-width: 785px;
-color: var(--Deep-Brown, #221009);
-/* Display 1 */
-font-family: Inter;
-font-size: 36px;
-font-style: normal;
-font-weight: 400;
-line-height: 52px; /* 144.444% */
-letter-spacing: -0.36px;
-padding: 61px 270px 61px 385px;
+    max-width: 785px; /* Maksymalna szerokość treści intro-content */
+    width: 100%;
+    color: var(--Deep-Brown, #221009);
+    font-family: Inter;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 52px;
+    letter-spacing: -0.36px;
+    padding: 100px 20px 105px; /* Dostosowanie wewnętrznego odstępu */
+    text-align: left; /* Tekst zacznie się od lewej strony */
 }
 
 .oferta {
-display: inline-flex;
-width: 100%;
-height: 850px;
-padding-left: 0px;
-justify-content: flex-end;
-align-items: center;
-flex-shrink: 0;
-background: var(--Deep-Brown, #221009);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--Deep-Brown, #221009);
 }
+.content-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1200px; /* Maksymalna szerokość zawartości */
+    margin: 0 auto; /* Wyśrodkowanie zawartości */
+}
+
+.image-content {
+    flex: 1; /* Elastyczność - obrazek zajmie dostępną przestrzeń */
+    background: url(images/jonny-gios-ayh8xpNMRn4-unsplash.png) lightgray 50% / cover no-repeat;
+    width: 710px;
+    height: 1065px;
+    flex-shrink: 0;
+}
+
+.text-content {
+    padding-top: 200px !important;
+    padding-right: 137px !important;
+    flex: 1; /* Elastyczność - tekst zajmie dostępną przestrzeń */
+    color: var(--White, #FFF);
+    /* Display 2 */
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px; /* 135.714% */
+    letter-spacing: -0.28px;
+    width: 438px;
+}
+
 
 .hero-content {
     z-index: 1;
 }
 
 .main-nav {
+    position: sticky;
+    top: 0;
     width: 100%;
     height: 84px;
     flex-shrink: 0;
     background: var(--Deep-Brown, #221009);
+     z-index: 900;; /* Wartość z-indeksu dla nawigacji */
 }
 
 .main-nav ul {
@@ -81,7 +132,6 @@ background: var(--Deep-Brown, #221009);
 
 .main-nav a {
     text-decoration: none;
-    color: #FFFFFF;
     padding-left: 32px;
     padding-top: 30px;
     display: inline-block;
@@ -89,11 +139,15 @@ background: var(--Deep-Brown, #221009);
     border: var(--Deep-Brown, #221009);
     transition: background-color 0.3s;
     color: var(--White, #FFF);
-    /* Header link */
     font-family: Inter;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 120% */
+}
+
+.text-block {
+    margin-left: 20px; /* Dostosowanie odstępu między obrazem a tekstem */
+    float: right;
 }
 
