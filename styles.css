@@ -109,6 +109,9 @@ body {
 }
 
 .main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: sticky;
     top: 0;
     width: 100%;
@@ -118,7 +121,18 @@ body {
      z-index: 900;; /* Wartość z-indeksu dla nawigacji */
 }
 
+.logo_mini {
+    width: 278px; /* Dostosuj szerokość logo_mini */
+    height: 32px; /* Dostosuj wysokość logo_mini */
+    background: url(images/logo_mini.png) no-repeat;
+    position: fixed;
+    top: -180px;
+    z-index: 9999;
+    transition: top 1.2s ease-in-out;
+}
+
 .main-nav ul {
+ align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
