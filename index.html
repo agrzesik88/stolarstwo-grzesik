@@ -1,92 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="images/browser_icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="img/browser_icon.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <script type="text/javascript">
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      window.location = "/stolarstwo-grzesik/mobile/mobile.html";
-    }
-  </script>
     <title>Stolarstwo Grzesik</title>
 </head>
 <body>
-
-<nav class="main-nav">
-    <ul>
-        <li><a href="#intro">O nas</a></li>
-        <li><a href="#oferta">Realizacje</a></li>
-        <li><a href="#services">Praca</a></li>
-        <li><a href="#portfolio">Kontakt</a></li>
-    </ul>
-    <div class="logo_mini"></div>
+<script src="script.js"></script>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <!-- <img src="logo.png" alt="Logo" class="d-block d-md-none w-100"> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">O nas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Realizacje</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Praca</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Kontakt</a>
+        </li>
+      </ul>
+    </div>
 </nav>
 
-<header class="hero">
-    <div class="logo_big"></div>
-    <div class="home_img"></div>
-    <div class="text-block">
-        <h2>Tytuł Tekstu</h2>
-        <p>Treść tekstu...</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <section class="sekcja">
+        <h1>Sekcja</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt, enim eu tincidunt ullamcorper, augue felis scelerisque ipsum, in semper eros mauris non mi. Maecenas tristique enim ac quam accumsan, ac scelerisque enim scelerisque. Donec scelerisque quam ut laoreet scelerisque.</p>
+      </section>
     </div>
-</header>
-
-<script src="script.js"></script>
-
-<section id="intro" class="intro">
-    <div class="intro-content">
-        Stolarstwo Grzesik to renomowana firma stolarska z wieloletnim doświadczeniem, działająca na terenie województwa
-        opolskiego, gotowa obsłużyć klientów z całej Polski oraz za granicą w przypadku większych zamówień. Naszą
-        priorytetową wartością jest dbałość
-        o środowisko, dlatego używamy wyłącznie certyfikowanego drewna oznaczonego certyfikatem FSC, co stanowi
-        gwarancję zrównoważonego i ekologicznego podejścia do naszej działalności.
-        Zatrudniamy jedynie doświadczonych stolarzy, których pasja do rzemiosła przekłada się na jakość naszych
-        produktów i usług.
-    </div>
-</section>
-
-<section id="oferta" class="oferta">
-    <div class="content-wrapper">
-        <div class="text-content">
-            Nasze usługi obejmują pełen zakres działań, począwszy od precyzyjnych pomiarów, poprzez doradztwo w wyborze najlepszych rozwiązań, aż po produkcję, transport oraz profesjonalny montaż.
-            Dzięki kompleksowemu podejściu do każdego projektu, jesteśmy w stanie zrealizować nawet najbardziej wymagające zamówienia, zapewniając naszym klientom satysfakcję i trwałe rozwiązania stolarskie.
-        </div>
-        <div class="image-content">
-            <!-- Twój obrazek -->
-        </div>
-    </div>
-</section>
-
-<!--<section id="services" class="section">-->
-<!--    <div class="section-content">-->
-<!--        <h2>Our Services</h2>-->
-<!--        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore-->
-<!--            magna aliqua.</p>-->
-<!--    </div>-->
-<!--</section>-->
-
-<!--<section id="portfolio" class="section">-->
-<!--    <div class="section-content">-->
-<!--        <h2>Portfolio</h2>-->
-<!--        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore-->
-<!--            magna aliqua.</p>-->
-<!--    </div>-->
-<!--</section>-->
-
-<!--<section id="contact" class="section">-->
-<!--    <div class="section-content">-->
-<!--        <h2>Contact Us</h2>-->
-<!--        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore-->
-<!--            magna aliqua.</p>-->
-<!--    </div>-->
-<!--</section>-->
-
-<footer>
-    <p>&copy; 2023 Your Company. All rights reserved.</p>
-</footer>
+  </div>
 </body>
 </html>
