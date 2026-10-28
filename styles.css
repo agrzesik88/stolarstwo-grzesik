@@ -92,3 +92,20 @@
   .home-hero h1{transform:scaleX(1.284);transform-origin:left top}
   .privacy-copy p,.privacy-copy li{font-size:16px;line-height:1.5}
 }
+
+/* ---- poprawki 2026-10 ---- */
+img{height:auto}
+.form-error{display:none;margin-top:15px;color:var(--danger)}
+.form-error.show{display:block}
+.form-error a{color:var(--danger)}
+.send-btn:disabled{opacity:.65;cursor:progress}
+.map-wrap{width:693px}
+.map-link{display:inline-block;margin-top:14px;font-size:17px}
+.circle-f{text-decoration:none}
+.footer-social a,.social-row a{text-decoration:none}
+.footer-social a:hover,.social-row a:hover{text-decoration:underline}
+.lightbox__close:focus-visible,.lightbox__prev:focus-visible,.lightbox__next:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media(max-width:900px){
+  br.lg-br{display:none}
+  .map-wrap{width:100%}
+}
