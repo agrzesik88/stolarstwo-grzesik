@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agrzesik88.github.io/stolarstwo-grzesik/sitemap.xml

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#221009"/>
+  <rect x="6" y="27" width="52" height="10" rx="5" fill="#f1c69f"/>
+  <text x="32" y="24" font-family="Georgia, 'Times New Roman', serif" font-size="22"
+        font-weight="700" fill="#faede0" text-anchor="middle">SG</text>
+  <text x="32" y="53" font-family="Georgia, 'Times New Roman', serif" font-size="9"
+        fill="#f1c69f" text-anchor="middle" letter-spacing="1">STOLARSTWO</text>
+</svg>
