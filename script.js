@@ -3,7 +3,9 @@ const menu=document.querySelector('.mega-menu');
 const backdrop=document.querySelector('.menu-backdrop');
 const toggles=document.querySelectorAll('[data-menu-toggle]');
 const mobile=document.querySelector('.mobile-menu-button');
-function setMenu(open){if(!menu)return;menu.classList.toggle('open',open);backdrop?.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);applyFx();toggles.forEach(b=>b.setAttribute('aria-expanded',String(open)));if(mobile){mobile.textContent=open?'\u2715':'\u2630';mobile.setAttribute('aria-label',open?'Zamknij menu':'Otwórz menu')}}
+const SG=k=>(window.SG_T?window.SG_T(k):k); // tlumaczenie z i18n.js, jak nie ma - zostaje po polsku
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}}; // storage moze byc zablokowany
+function setMenu(open){if(!menu)return;menu.classList.toggle('open',open);backdrop?.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);applyFx();toggles.forEach(b=>b.setAttribute('aria-expanded',String(open)));if(mobile){mobile.textContent=open?'\u2715':'\u2630';mobile.setAttribute('aria-label',open?SG('Zamknij menu'):SG('Otwórz menu'))}}
 toggles.forEach(b=>b.addEventListener('click',e=>{e.preventDefault();setMenu(!menu.classList.contains('open'))}));
 backdrop?.addEventListener('click',()=>setMenu(false));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
@@ -45,7 +47,7 @@ const drawFiles=()=>{if(!filesBox)return;filesBox.textContent='';files.forEach((
   const row=document.createElement('div');row.className='file-item';
   const name=document.createElement('span');name.textContent=f.name;
   const btn=document.createElement('button');btn.type='button';btn.className='file-remove';
-  btn.setAttribute('aria-label','Usuń załącznik: '+f.name);btn.textContent='⌫';
+  btn.setAttribute('aria-label',SG('Usuń załącznik:')+' '+f.name);btn.textContent='⌫';
   btn.addEventListener('click',()=>{files.splice(i,1);drawFiles()});
   row.append(name,btn);filesBox.append(row)})};
 inputFile?.addEventListener('change',()=>{files=[...inputFile.files];drawFiles()});
@@ -101,8 +103,8 @@ document.querySelectorAll('[data-year]').forEach(el=>{el.textContent=String(new 
 
 // cookies
 const cookie=document.querySelector('.cookie');
-if(cookie&&!localStorage.getItem('sg-cookie-choice'))cookie.classList.add('show');
-document.querySelectorAll('[data-cookie]').forEach(b=>b.addEventListener('click',()=>{localStorage.setItem('sg-cookie-choice',b.dataset.cookie);cookie?.classList.remove('show')}));
+if(cookie&&!store.get('sg-cookie-choice'))cookie.classList.add('show');
+document.querySelectorAll('[data-cookie]').forEach(b=>b.addEventListener('click',()=>{store.set('sg-cookie-choice',b.dataset.cookie);cookie?.classList.remove('show')}));
 
 // ---- animacje przy przewijaniu ----
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -175,6 +177,7 @@ function applyFx(){
   heroTitle.style.opacity=String(1-Math.min(1,Math.max(0,(e-.5)/.4)));
   headBrand.style.opacity=String(Math.min(1,Math.max(0,(e-.2)/.5)));
 }
+window.SG_remeasure=measureFx; // i18n.js prosi o przeliczenie po zmianie jezyka
 measureFx();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measureFx); // czcionka Inter moze dosrac po pomiarze
 addEventListener('load',measureFx);
