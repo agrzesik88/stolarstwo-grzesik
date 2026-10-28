@@ -3,7 +3,7 @@ const menu=document.querySelector('.mega-menu');
 const backdrop=document.querySelector('.menu-backdrop');
 const toggles=document.querySelectorAll('[data-menu-toggle]');
 const mobile=document.querySelector('.mobile-menu-button');
-function setMenu(open){if(!menu)return;menu.classList.toggle('open',open);backdrop?.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);toggles.forEach(b=>b.setAttribute('aria-expanded',String(open)));if(mobile){mobile.textContent=open?'\u2715':'\u2630';mobile.setAttribute('aria-label',open?'Zamknij menu':'Otwórz menu')}}
+function setMenu(open){if(!menu)return;menu.classList.toggle('open',open);backdrop?.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);applyFx();toggles.forEach(b=>b.setAttribute('aria-expanded',String(open)));if(mobile){mobile.textContent=open?'\u2715':'\u2630';mobile.setAttribute('aria-label',open?'Zamknij menu':'Otwórz menu')}}
 toggles.forEach(b=>b.addEventListener('click',e=>{e.preventDefault();setMenu(!menu.classList.contains('open'))}));
 backdrop?.addEventListener('click',()=>setMenu(false));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
@@ -134,6 +134,52 @@ toTop.setAttribute('aria-label','Przewiń na górę strony');
 document.body.append(toTop);
 toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:reduceMotion?'auto':'smooth'}));
 
+// ---- duzy logotyp na hero wlatuje do naglowka przy przewijaniu ----
+const heroTitle=document.querySelector('.home-hero h1');
+const headBrand=document.querySelector('.home-header .brand');
+const FLIGHT=200; // ile pikseli przewijania trwa caly "lot"
+let fx=null;
+function clearFx(){
+  fx=null;
+  if(heroTitle){heroTitle.style.transform='';heroTitle.style.opacity='';heroTitle.style.transformOrigin='';heroTitle.style.zIndex='';heroTitle.style.pointerEvents='';heroTitle.style.willChange=''}
+  if(headBrand)headBrand.style.opacity='';
+}
+// mierzymy wyjscie (duzy napis) i miejsce docelowe (logo w pasku) raz, potem tylko przeliczamy
+function measureFx(){
+  if(!heroTitle||!headBrand||innerWidth<=900||getComputedStyle(headBrand).display==='none'){clearFx();return}
+  heroTitle.style.transform='';heroTitle.style.opacity='';
+  const r=heroTitle.getBoundingClientRect(),b=headBrand.getBoundingClientRect(),cs=getComputedStyle(heroTitle);
+  const m=cs.transform,k0=(m&&m!=='none')?(parseFloat(m.slice(m.indexOf('(')+1))||1):1;
+  fx={l:r.left+scrollX,t:r.top+scrollY,w:r.width,h:r.height,k0:k0,
+      tf:parseFloat(getComputedStyle(headBrand).fontSize)||25,
+      hf:parseFloat(cs.fontSize)||76,
+      tcx:b.left+b.width/2,tcy:b.top+b.height/2};
+  heroTitle.style.transformOrigin='left top';
+  heroTitle.style.pointerEvents='none'; // nigdy nie zaslania linkow w pasku
+  heroTitle.style.willChange='transform,opacity';
+  headBrand.style.opacity='0';
+  applyFx();
+}
+function applyFx(){
+  if(!fx||!heroTitle||!headBrand)return;
+  if(menu&&menu.classList.contains('open')){heroTitle.style.opacity='0';headBrand.style.opacity='1';return}
+  const p=Math.min(1,Math.max(0,scrollY/FLIGHT)),e=p*p*(3-2*p);
+  if(reduceMotion){heroTitle.style.transform=''}
+  else{
+    const s=1+(fx.tf/fx.hf-1)*e, k=1+(fx.k0-1)*(1-e); // maleje do rozmiaru paska, rozciagniecie wraca do 1
+    const w=fx.w*s*k/fx.k0, h=fx.h*s;
+    const tx=(fx.tcx-(fx.l-scrollX+w/2))*e, ty=(fx.tcy-(fx.t-scrollY+h/2))*e; // srodek leci na srodek logo w pasku
+    heroTitle.style.transform='translate('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px) scale('+s.toFixed(4)+') scaleX('+k.toFixed(4)+')';
+  }
+  // duzy napis znika, wsuwajac sie pod pasek, a male logo w pasku pojawia sie od razu za nim
+  heroTitle.style.opacity=String(1-Math.min(1,Math.max(0,(e-.5)/.4)));
+  headBrand.style.opacity=String(Math.min(1,Math.max(0,(e-.2)/.5)));
+}
+measureFx();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measureFx); // czcionka Inter moze dosrac po pomiarze
+addEventListener('load',measureFx);
+addEventListener('resize',measureFx,{passive:true});
+
 // ---- delikatna paralaksa (tylko desktop) ----
 const parallax=[...document.querySelectorAll('.hero-clip,.home-story__image')];
 let ticking=false;
@@ -142,6 +188,7 @@ function onScroll(){
   requestAnimationFrame(()=>{
     ticking=false;
     toTop.classList.toggle('show',scrollY>700&&!(cookie&&cookie.classList.contains('show')));
+    applyFx();
     if(reduceMotion||innerWidth<=900){parallax.forEach(el=>{el.style.transform=''});return}
     const mid=innerHeight/2;
     parallax.forEach(el=>{

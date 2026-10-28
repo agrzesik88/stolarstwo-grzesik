@@ -69,7 +69,7 @@
   .privacy-copy li{margin-bottom:18px}
 }
 @media (min-width:901px){
-  .trusted{padding:0}
+  .trusted{padding:58px 40px 0}
   .trusted-design{display:block;width:1440px;height:656px;object-fit:cover}
 
   .contact-page .page-banner{height:360px}
