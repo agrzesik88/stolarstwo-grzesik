@@ -2,12 +2,12 @@
 const menu=document.querySelector('.mega-menu');
 const backdrop=document.querySelector('.menu-backdrop');
 const toggles=document.querySelectorAll('[data-menu-toggle]');
-function setMenu(open){if(!menu)return;menu.classList.toggle('open',open);backdrop?.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);toggles.forEach(b=>b.setAttribute('aria-expanded',String(open)))}
+const mobile=document.querySelector('.mobile-menu-button');
+function setMenu(open){if(!menu)return;menu.classList.toggle('open',open);backdrop?.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);toggles.forEach(b=>b.setAttribute('aria-expanded',String(open)));if(mobile){mobile.textContent=open?'\u2715':'\u2630';mobile.setAttribute('aria-label',open?'Zamknij menu':'Otwórz menu')}}
 toggles.forEach(b=>b.addEventListener('click',e=>{e.preventDefault();setMenu(!menu.classList.contains('open'))}));
 backdrop?.addEventListener('click',()=>setMenu(false));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
 // mobile button reuses mega menu
-const mobile=document.querySelector('.mobile-menu-button');
 mobile?.addEventListener('click',()=>setMenu(!menu.classList.contains('open')));
 
 // lightbox
@@ -103,4 +103,56 @@ document.querySelectorAll('[data-year]').forEach(el=>{el.textContent=String(new 
 const cookie=document.querySelector('.cookie');
 if(cookie&&!localStorage.getItem('sg-cookie-choice'))cookie.classList.add('show');
 document.querySelectorAll('[data-cookie]').forEach(b=>b.addEventListener('click',()=>{localStorage.setItem('sg-cookie-choice',b.dataset.cookie);cookie?.classList.remove('show')}));
+
+// ---- animacje przy przewijaniu ----
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const revealables=[...document.querySelectorAll('main > div, main > section, .gallery-item, .about-row, .home-card, .trust-logo, .contact-info, .job, .privacy-copy')];
+if(!reduceMotion&&'IntersectionObserver' in window){
+  const stagger=new Set(['gallery-item','home-card','trust-logo']);
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target;
+    if(el.dataset.delay)el.style.transitionDelay=el.dataset.delay;
+    el.classList.add('in');io.unobserve(el);
+    setTimeout(()=>{el.style.transitionDelay=''},1600);
+  })},{rootMargin:'0px 0px -6% 0px',threshold:.08});
+  revealables.forEach(el=>{
+    if(el.getBoundingClientRect().top<innerHeight*0.9)return; // widoczne od razu - nie chowamy
+    if([...el.classList].some(c=>stagger.has(c))){
+      const i=[...el.parentElement.children].indexOf(el);
+      el.dataset.delay=Math.min(Math.max(i,0),8)*60+'ms';
+    }
+    el.classList.add('will-reveal');
+    io.observe(el);
+  });
+}
+
+// ---- przycisk "do gory" ----
+const toTop=document.createElement('button');
+toTop.type='button';toTop.className='to-top';toTop.textContent='\u2191';
+toTop.setAttribute('aria-label','Przewiń na górę strony');
+document.body.append(toTop);
+toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:reduceMotion?'auto':'smooth'}));
+
+// ---- delikatna paralaksa (tylko desktop) ----
+const parallax=[...document.querySelectorAll('.hero-clip,.home-story__image')];
+let ticking=false;
+function onScroll(){
+  if(ticking)return;ticking=true;
+  requestAnimationFrame(()=>{
+    ticking=false;
+    toTop.classList.toggle('show',scrollY>700&&!(cookie&&cookie.classList.contains('show')));
+    if(reduceMotion||innerWidth<=900){parallax.forEach(el=>{el.style.transform=''});return}
+    const mid=innerHeight/2;
+    parallax.forEach(el=>{
+      const r=el.getBoundingClientRect();
+      if(r.bottom<0||r.top>innerHeight)return;
+      const y=Math.max(-45,Math.min(45,(r.top+r.height/2-mid)*.05));
+      el.style.transform='translate3d(0,'+y.toFixed(1)+'px,0)';
+    });
+  });
+}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',onScroll,{passive:true});
+onScroll();
 })();

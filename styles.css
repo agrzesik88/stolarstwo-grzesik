@@ -109,3 +109,57 @@ img{height:auto}
   br.lg-br{display:none}
   .map-wrap{width:100%}
 }
+
+/* ---- animacje i mikrointerakcje 2026-10 ---- */
+:root{--ease:cubic-bezier(.22,.61,.36,1)}
+
+/* pojawianie sie przy przewijaniu (klasy dodaje script.js) */
+.will-reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.will-reveal.in{opacity:1;transform:none}
+
+/* karty galerii na stronie glownej */
+.home-card{overflow:hidden;transition:transform .45s var(--ease)}
+.home-card img{transition:transform .6s var(--ease),opacity .18s ease}
+.home-card:hover{transform:translateY(-5px)}
+.home-card:hover img{transform:scale(1.05)}
+
+/* galerie na podstronach */
+.gallery-item img{transition:transform .6s var(--ease)}
+.gallery-item:hover img{transform:scale(1.06)}
+.gallery-item:focus-visible{outline:3px solid var(--dark);outline-offset:4px}
+
+/* przyciski */
+.outline-btn{transition:background .2s ease,color .2s ease,transform .3s var(--ease)}
+.outline-btn:hover{transform:translateY(-3px)}
+.send-btn{transition:transform .25s var(--ease),box-shadow .25s ease}
+.send-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 22px rgba(34,16,9,.28)}
+
+/* nawigacja - podkreslenie wjezdzajace */
+.header__nav a,.nav-button{position:relative}
+.header__nav a::after,.nav-button::after{content:"";position:absolute;left:0;bottom:4px;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
+.header__nav a:hover::after,.nav-button:hover::after,.header__nav a.active::after{transform:scaleX(1);transform-origin:left}
+
+/* wejscie lightboxa i banera cookies */
+.lightbox.open{animation:lbFade .28s ease both}
+.lightbox.open .lightbox__image{animation:lbZoom .34s var(--ease) both}
+@keyframes lbFade{from{opacity:0}to{opacity:1}}
+@keyframes lbZoom{from{opacity:0;transform:translateX(-50%) scale(.95)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+.cookie.show{animation:cookieUp .45s var(--ease) both}
+@keyframes cookieUp{from{transform:translate(-50%,100%)}to{transform:translate(-50%,0)}}
+
+/* przycisk "do gory" - dodawany przez script.js */
+.to-top{position:fixed;right:24px;bottom:24px;z-index:800;width:46px;height:46px;border:0;border-radius:50%;background:var(--dark);color:#fff;font-size:19px;line-height:1;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(14px);box-shadow:0 8px 20px rgba(0,0,0,.3);transition:opacity .3s var(--ease),transform .3s var(--ease),visibility .3s,background .2s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{background:#3d1f12}
+
+/* fokus widoczny + systemowe ustawienia animacji */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--dark);outline-offset:3px}
+.header a:focus-visible,.header button:focus-visible,.cookie button:focus-visible,.lightbox button:focus-visible{outline-color:var(--peach)}
+@media(max-width:900px){.to-top{right:16px;bottom:100px}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .will-reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .lightbox.open,.lightbox.open .lightbox__image,.cookie.show{animation:none}
+  .home-card:hover,.home-card:hover img,.gallery-item:hover img,.outline-btn:hover,.send-btn:hover:not(:disabled){transform:none}
+  .header__nav a::after,.nav-button::after{transition:none}
+}
